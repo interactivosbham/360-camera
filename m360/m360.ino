@@ -10,7 +10,7 @@ int pot_pin = 0;      // analog pin used to connect the potentiometer
 int val;              // variable to read the value from the potentiometer´s analog pin 
 int valmap = 70;
 int val_photosensor;  // variable to read the value from the LDR photosensor
-int eachCounter = 0;      // variable to count from 1 to 4 (among the motors)
+int eachCounter = 0;  // variable to count from 1 to 4 (among the motors)
 
 boolean bAll = true;    // button all motors together
 boolean bEach = false;  // button each motor, one by one
@@ -32,12 +32,7 @@ int shutOpen = 120;  // open the shutter
 int shutClose = 70;  // close the shutter
 
 //LEDs
-int led_motors[] = {7, 8, 9, 10};   // LED corresponding to the motors
-
-// int lMotor1 = 7;   // LED correspond to motor 1
-// int lMotor2 = 8;   // LED correspond to motor 2
-// int lMotor3 = 9;   // LED correspond to motor 3
-// int lMotor4 = 10;  // LED correspond to motor 4
+int led_motors[] = {7, 8, 9, 10};  // LED corresponding to the motors
 
 int green = 12;  // LED that means "free to use"
 int red = 13;    // LED that means "busy"
@@ -55,11 +50,6 @@ void setup()
   pinMode (bAll_pin, INPUT);
   pinMode (bEach_pin, INPUT);
   pinMode (bAuto_pin, INPUT);
-
-  // pinMode (lMotor1, OUTPUT);
-  // pinMode (lMotor2, OUTPUT);
-  // pinMode (lMotor3, OUTPUT);
-  // pinMode (lMotor4, OUTPUT);
 
   pinMode (green, OUTPUT);
   pinMode (red, OUTPUT);
@@ -97,7 +87,7 @@ void loop()
 
   if (bAuto_now != bAuto_previous) {  // tests if the Automatic button was pressed
     if (bAuto_now == HIGH) {
-      val_photosensor = analogRead(1);                           // reads the value of the potentiometer (value between 0 and 1023) 
+      val_photosensor = analogRead(1);                            // reads the value of the potentiometer (value between 0 and 1023) 
       val_photosensor = map(val_photosensor, 0, 300, 50, 10000);  // scale it to use it with the servo (value between 0 and 1lMotor20)
       Serial.println (val_photosensor);
       bAuto = true;
@@ -115,49 +105,49 @@ void loop()
     }
     
     for (int i=0; i<4; i+=1){
-      myservos[i].write(valmap);             // sets the servo position according to the scaled value 
+      myservos[i].write(valmap);          // sets the servo position according to the scaled value 
       digitalWrite(led_motors[i], HIGH);  // sets high the 4 Leds 
     }
     
-    if (valmap > shutClose + 3) {        //tests if the shutters are open
+    if (valmap > shutClose + 3) {  //tests if the shutters are open
       digitalWrite (red, HIGH);
       digitalWrite (green, LOW);
     }
-    else {                        //then, if the shutter is closed
+    else {                         //then, if the shutter is closed
       digitalWrite (green, HIGH);
       digitalWrite (red, LOW);
     }
 
     Serial.println (valmap);
-    delay(15);             // waits for the servo to get there
+    delay(15);  // waits for the servo to get there
   }
   
   
   if (bEach) {
     if (abs(analogRead(pot_pin) - val) > 15) {
-      val = analogRead(pot_pin);                          // reads the value of the potentiometer (value between 0 and 1023) 
+      val = analogRead(pot_pin);                         // reads the value of the potentiometer (value between 0 and 1023) 
       valmap = map(val, 15, 1023, shutClose, shutOpen);  // scale it to use it with the servo (value between 0 and 1lMotor20) 
     }  
     digitalWrite(led_motors[eachCounter], HIGH);  // sets each Led depending on the eachCounter
     myservos[eachCounter].write(valmap);
     Serial.println(valmap);
    
-    if (valmap > shutClose + 3) {        //tests if the shutters are open
+    if (valmap > shutClose + 3) {  //tests if the shutters are open
       digitalWrite (red, HIGH);
       digitalWrite (green, LOW);
     }
-    else {                        //then, if the shutter is closed
+    else {                         //then, if the shutter is closed
       digitalWrite (green, HIGH);
       digitalWrite (red, LOW);
     }
-    delay(15);             // waits for the servo to get there
+    delay(15);  // waits for the servo to get there
   }
 
 
   if (bAuto) {
     for (int i=0; i<4; i+=1){
       digitalWrite(led_motors[i], LOW);  // sets high the 4 Leds 
-      myservos[i].write(shutOpen);  // sets the servo position according to this value 
+      myservos[i].write(shutOpen);       // sets the servo position according to this value 
     }
    
     digitalWrite (red, HIGH);   //led shutter Red
@@ -171,7 +161,7 @@ void loop()
     digitalWrite (green, HIGH);  //led shutter Green
     digitalWrite (red, LOW);     //led shutter Red
 
-    delay(25);             // waits for the servo to get there
+    delay(25);  // waits for the servo to get there
     bAuto = false;
   }
 }
