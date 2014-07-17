@@ -1,5 +1,13 @@
-// Controlling a servo position using a potentiometer (variable resistor) 
-// by Michal Rinott <http://people.interaction-ivrea.it/m.rinott> 
+// 360º Matchbox Pinhole Camera
+// Arduino software to control the motors that controls the cameras
+// by Potentiometer or by Automatic light measure
+// Project Developed on Interactivos? Birmingham 2014
+// Project leader: Rafael Ski
+// Colaborators: Gustavo, Imma, Idris, Sonia, Bec, Anna, Pablo, Javier, Juan, Alberto.
+
+// Code initialy based on Michal Rinott´s code to control
+// servo position using potentiometer <http://people.interaction-ivrea.it/m.rinott> 
+
 
 #include <Servo.h> 
 
