@@ -58,7 +58,6 @@ void setup()
   pinMode (bAll_pin, INPUT);
   pinMode (bEach_pin, INPUT);
   pinMode (bAuto_pin, INPUT);
-
   pinMode (green, OUTPUT);
   pinMode (red, OUTPUT);
 }
@@ -108,8 +107,8 @@ void loop()
 
   if (bAll) {
     if (abs(analogRead(pot_pin) - val) > 15) {
-      val = analogRead(pot_pin);                          // reads the value of the potentiometer (value between 0 and 1023) 
-      valmap = map(val, 15, 1023, shutClose, shutOpen);  // scale it to use it with the servo (value between 0 and 1lMotor20) 
+      val = analogRead(pot_pin);             // reads the value of the potentiometer (value between 0 and 1023) 
+      valmap = map(val, 15, 1023, 120, 70);  // scale it to use it with the servo (value between 0 and 1lMotor20) 
     }
     
     for (int i=0; i<4; i+=1){
